@@ -165,6 +165,11 @@ Calendar not updating	Permissions not granted	Grant calendar permission at runti
 Utilization of GitHub Actions
 GitHub Actions was used to conduct the unit testing for the application to ensure everything runs well. Find screenshots below
 
+Utilization of AI
+* ChatGPT was used to troubleshoot our application crashing. Prompt and solution below:
+![WhatsApp Image 2025-10-07 at 22 46 46_1d2079ec](https://github.com/user-attachments/assets/8e6016bd-bf6c-4cad-879b-f5f652d1b8e4)
+![WhatsApp Image 2025-10-07 at 22 46 47_186f9e36](https://github.com/user-attachments/assets/a6cd6ca4-dcd0-4630-8b6a-d96a13261aa7)
+
  API Overview
 Firebase REST-style Functions:
 
