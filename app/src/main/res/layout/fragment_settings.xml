@@ -84,7 +84,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/changeReminderButton"
-                        style="@style/Widget.Material3.Button.TextButton"
+                        style="?attr/materialTextButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_change_time" />
@@ -121,7 +121,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/updateDisplayNameButton"
-                    style="@style/Widget.Material3.Button.Filled"
+                    style="?attr/materialButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -129,7 +129,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/signOutButton"
-                    style="@style/Widget.Material3.Button.Outlined"
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
