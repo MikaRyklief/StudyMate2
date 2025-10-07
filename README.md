@@ -47,7 +47,13 @@ Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Ed
 * Allows users to change their time, allowing for users in different time zones to make use of the app
 * Made use of push notifications so that user doesn't have to go into the app to be reminded about tests or study time![WhatsApp Image 2025-10-07 at 21 54 44_be22a37f](https://github.com/user-attachments/assets/028ba56f-36e7-4b99-96e6-8e2fe50e5141)
 
+## Utilization of GitHub Actions
+GitHub Actions was used to conduct the unit testing for the application to ensure everything runs well. Find screenshots below
 
+## Utilization of AI
+* ChatGPT was used to troubleshoot our application crashing. Prompt and solution below:
+![WhatsApp Image 2025-10-07 at 22 46 46_1d2079ec](https://github.com/user-attachments/assets/8e6016bd-bf6c-4cad-879b-f5f652d1b8e4)
+![WhatsApp Image 2025-10-07 at 22 46 47_186f9e36](https://github.com/user-attachments/assets/a6cd6ca4-dcd0-4630-8b6a-d96a13261aa7)
 
 ##  Tech Stack
 
@@ -162,13 +168,7 @@ Unresolved reference: position	Using property instead of setter	Use setPosition(
 Google Sign-In fails	Missing OAuth credentials	Check Firebase OAuth client and google-services.json
 Calendar not updating	Permissions not granted	Grant calendar permission at runtime
 
-Utilization of GitHub Actions
-GitHub Actions was used to conduct the unit testing for the application to ensure everything runs well. Find screenshots below
 
-Utilization of AI
-* ChatGPT was used to troubleshoot our application crashing. Prompt and solution below:
-![WhatsApp Image 2025-10-07 at 22 46 46_1d2079ec](https://github.com/user-attachments/assets/8e6016bd-bf6c-4cad-879b-f5f652d1b8e4)
-![WhatsApp Image 2025-10-07 at 22 46 47_186f9e36](https://github.com/user-attachments/assets/a6cd6ca4-dcd0-4630-8b6a-d96a13261aa7)
 
  API Overview
 Firebase REST-style Functions:
