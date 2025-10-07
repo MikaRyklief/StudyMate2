@@ -17,7 +17,7 @@
 
 ## 📖 Overview
 
-**StudyMate2** is a productivity and wellness app for students that helps manage academic tasks, exams, and schedules efficiently.  
+**StudyMate** is a productivity and wellness app for students that helps manage academic tasks, exams, and schedules efficiently.  
 It combines **Google Calendar integration**, **gamification**, **analytics**, and **Pomodoro-based focus tools** to support academic success.
 
 Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Education (IIE)**.
