@@ -50,7 +50,7 @@ jobs:
       
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results-api-${{ matrix.api-level }}
           path: |
@@ -75,7 +75,7 @@ jobs:
         run: ./gradlew assembleDebug --stacktrace
       
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-debug-api-${{ matrix.api-level }}
           path: app/build/outputs/apk/debug/app-debug.apk
@@ -112,7 +112,7 @@ jobs:
       
       - name: Upload Lint Report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: lint-results
           path: app/build/reports/lint-results*.html
