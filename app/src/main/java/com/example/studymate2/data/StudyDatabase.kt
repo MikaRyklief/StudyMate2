@@ -5,7 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [StudyTask::class], version = 2, exportSchema = false)
+@Database(entities = [StudyTask::class], version = 3, exportSchema = false)
+@androidx.room.TypeConverters(Converters::class)
 abstract class StudyDatabase : RoomDatabase() {
 
     abstract fun studyTaskDao(): StudyTaskDao

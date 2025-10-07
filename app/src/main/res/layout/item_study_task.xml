@@ -39,14 +39,26 @@
             app:layout_constraintTop_toBottomOf="@id/taskTitle"
             app:layout_constraintEnd_toEndOf="@id/taskTitle" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/taskTypeChip"
+            style="@style/Widget.Material3.Chip.Assist.Elevated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:chipIconEnabled="false"
+            app:chipStrokeColor="@android:color/transparent"
+            app:chipStrokeWidth="0dp"
+            app:layout_constraintStart_toStartOf="@id/taskSubject"
+            app:layout_constraintTop_toBottomOf="@id/taskSubject" />
+
         <TextView
             android:id="@+id/taskMeta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
             app:layout_constraintStart_toStartOf="@id/taskTitle"
-            app:layout_constraintTop_toBottomOf="@id/taskSubject"
+            app:layout_constraintTop_toBottomOf="@id/taskTypeChip"
             app:layout_constraintEnd_toEndOf="@id/taskTitle"
             app:layout_constraintBottom_toBottomOf="parent" />
 

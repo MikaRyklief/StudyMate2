@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.studymate2.StudyMateApp
 import com.example.studymate2.data.StudyTask
 import com.example.studymate2.data.StudyTaskRepository
+import com.example.studymate2.data.TaskType
 import kotlinx.coroutines.launch
 
 class StudyTaskViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,13 +18,20 @@ class StudyTaskViewModel(application: Application) : AndroidViewModel(applicatio
 
     val allTasks = repository.allTasks.asLiveData()
 
-    fun addTask(title: String, subject: String, dueDate: Long, durationMinutes: Int) {
+    fun addTask(
+        title: String,
+        subject: String,
+        dueDate: Long,
+        durationMinutes: Int,
+        taskType: TaskType
+    ) {
         if (title.isBlank() || subject.isBlank() || durationMinutes <= 0) return
         val task = StudyTask(
             title = title.trim(),
             subject = subject.trim(),
             dueDate = dueDate,
-            durationMinutes = durationMinutes
+            durationMinutes = durationMinutes,
+            taskType = taskType
         )
         viewModelScope.launch {
             repository.insert(task)

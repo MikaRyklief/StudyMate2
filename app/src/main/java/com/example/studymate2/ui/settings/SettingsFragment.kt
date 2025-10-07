@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,8 +14,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.studymate2.MainActivity
 import com.example.studymate2.R
 import com.example.studymate2.databinding.FragmentSettingsBinding
+import com.example.studymate2.notification.StudyNotificationScheduler
 import com.example.studymate2.settings.UserPreferencesRepository
 import com.example.studymate2.settings.userPreferencesDataStore
+import com.example.studymate2.util.LocaleManager
 import com.example.studymate2.viewmodel.SettingsViewModel
 import com.example.studymate2.viewmodel.SettingsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +31,11 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+
+    private val languageOptions = listOf(
+        LanguageOption("en", R.string.language_english),
+        LanguageOption("zu", R.string.language_isizulu)
+    )
 
     private val viewModel: SettingsViewModel by viewModels {
         SettingsViewModelFactory(UserPreferencesRepository(requireContext().userPreferencesDataStore))
@@ -71,7 +79,24 @@ class SettingsFragment : Fragment() {
             (activity as? MainActivity)?.promptLogout()
         }
 
+        setupLanguageDropdown()
+
         observeSettings()
+    }
+
+    private fun setupLanguageDropdown() {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            languageOptions.map { getString(it.labelRes) }
+        )
+        binding.languageDropdown.setAdapter(adapter)
+        binding.languageDropdown.setOnItemClickListener { _, _, position, _ ->
+            val option = languageOptions[position]
+            viewModel.updateLanguage(option.code)
+            LocaleManager.apply(option.code)
+            Snackbar.make(binding.root, R.string.settings_language_applied, Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun observeSettings() {
@@ -88,12 +113,29 @@ class SettingsFragment : Fragment() {
                             R.string.settings_notifications_disabled
                         }
                         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+                        StudyNotificationScheduler.scheduleDailyReminder(
+                            requireContext(),
+                            settings.reminderHour,
+                            settings.reminderMinute,
+                            isChecked
+                        )
                     }
 
                     binding.reminderTime.text = getString(
                         R.string.settings_reminder_updated,
                         settings.reminderHour,
                         settings.reminderMinute
+                    )
+
+                    val selected = languageOptions.firstOrNull { it.code == settings.languageCode }
+                        ?: languageOptions.first()
+                    binding.languageDropdown.setText(getString(selected.labelRes), false)
+
+                    StudyNotificationScheduler.scheduleDailyReminder(
+                        requireContext(),
+                        settings.reminderHour,
+                        settings.reminderMinute,
+                        settings.notificationsEnabled
                     )
                 }
             }
@@ -107,6 +149,12 @@ class SettingsFragment : Fragment() {
                 R.string.settings_reminder_updated,
                 selectedHour,
                 selectedMinute
+            )
+            StudyNotificationScheduler.scheduleDailyReminder(
+                requireContext(),
+                selectedHour,
+                selectedMinute,
+                binding.notificationsSwitch.isChecked
             )
         }, hour, minute, true).show()
     }
@@ -129,3 +177,5 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 }
+
+private data class LanguageOption(val code: String, val labelRes: Int)
