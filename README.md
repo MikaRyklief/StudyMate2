@@ -172,7 +172,7 @@ Endpoint	Method	Description
 /tasks	GET, POST, PUT, DELETE	Manage tasks and exams
 /streaks	GET, POST	Track XP and streaks
 /analytics	GET, POST	Store and fetch study statistics
-/pomodoro	GET, POST	Log completed focus sessions📺 Demo Video: Watch on YouTube https://youtu.be/qWRgg0yIot8?si=cRk33FpJJLTJPrcd
+/pomodoro	GET, POST	Log completed focus sessions📺 Demo Video: Watch on YouTube https://www.youtube.com/watch?v=qWRgg0yIot8
 
  Acknowledgements
 
