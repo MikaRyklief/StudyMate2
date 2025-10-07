@@ -5,8 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import com.example.studymate2.R
 import com.example.studymate2.data.StudyTask
 import com.example.studymate2.databinding.ItemDashboardTaskBinding
+import com.example.studymate2.util.SubjectColorProvider
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,6 +30,12 @@ class DashboardTaskAdapter : ListAdapter<StudyTask, DashboardTaskAdapter.TaskVie
             binding.dashboardTaskTitle.text = task.title
             binding.dashboardTaskSubject.text = task.subject
             binding.dashboardTaskDue.text = formatDueDate(task.dueDate, task.durationMinutes)
+            binding.dashboardTaskType.setText(task.taskType.labelRes)
+            binding.dashboardTaskType.chipBackgroundColor =
+                SubjectColorProvider.colorStateListForSubject(binding.root.context, task.subject)
+            binding.dashboardTaskType.setTextColor(
+                ContextCompat.getColor(binding.root.context, android.R.color.white)
+            )
         }
 
         private fun formatDueDate(timestamp: Long, duration: Int): String {

@@ -11,5 +11,12 @@ data class StudyTask(
     val subject: String,
     val dueDate: Long,
     val durationMinutes: Int,
+    val taskType: TaskType = TaskType.ASSIGNMENT,
     val completed: Boolean = false
 )
+
+enum class TaskType(@androidx.annotation.StringRes val labelRes: Int) {
+    ASSIGNMENT(com.example.studymate2.R.string.task_type_assignment),
+    EXAM(com.example.studymate2.R.string.task_type_exam),
+    REVISION(com.example.studymate2.R.string.task_type_revision)
+}

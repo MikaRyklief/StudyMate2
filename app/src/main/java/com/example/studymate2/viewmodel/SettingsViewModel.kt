@@ -29,6 +29,12 @@ class SettingsViewModel(private val repository: UserPreferencesRepository) : Vie
             repository.setReminderTime(hour, minute)
         }
     }
+
+    fun updateLanguage(languageCode: String) {
+        viewModelScope.launch {
+            repository.setLanguage(languageCode)
+        }
+    }
 }
 
 class SettingsViewModelFactory(private val repository: UserPreferencesRepository) : ViewModelProvider.Factory {

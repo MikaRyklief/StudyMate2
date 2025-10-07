@@ -3,14 +3,21 @@ package com.example.studymate2
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.work.*
 import com.example.studymate2.databinding.ActivityMainBinding
+import com.example.studymate2.notification.StudyNotificationScheduler
+import com.example.studymate2.settings.UserPreferencesRepository
+import com.example.studymate2.settings.userPreferencesDataStore
 import com.example.studymate2.ui.dashboard.DashboardFragment
 import com.example.studymate2.ui.planner.PlannerFragment
 import com.example.studymate2.ui.resources.ResourcesFragment
@@ -19,14 +26,20 @@ import com.example.studymate2.worker.CalendarSyncWorker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val preferencesRepository by lazy {
+        UserPreferencesRepository(applicationContext.userPreferencesDataStore)
+    }
 
     companion object {
         private const val CALENDAR_PERMISSION_REQUEST_CODE = 2001
+        private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 2002
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +50,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
+        StudyNotificationScheduler.createChannels(this)
+        requestNotificationPermissionIfNeeded()
+
         setupBottomNavigation()
 
         if (savedInstanceState == null) {
@@ -45,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         checkCalendarPermissionAndScheduleSync()
+        observePreferences()
     }
 
     override fun onStart() {
@@ -89,6 +106,21 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(binding.root, R.string.auth_required, Snackbar.LENGTH_SHORT).show()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
+        }
+    }
+
+    private fun observePreferences() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                preferencesRepository.settingsFlow.collect { settings ->
+                    StudyNotificationScheduler.scheduleDailyReminder(
+                        applicationContext,
+                        settings.reminderHour,
+                        settings.reminderMinute,
+                        settings.notificationsEnabled
+                    )
+                }
+            }
         }
     }
 
@@ -149,10 +181,47 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CALENDAR_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Snackbar.make(binding.root, "Calendar access granted", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.calendar_permission_granted),
+                    Snackbar.LENGTH_SHORT
+                ).show()
                 scheduleCalendarSync()
             } else {
-                Snackbar.make(binding.root, "Calendar access denied", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.calendar_permission_denied),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        } else if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                lifecycleScope.launch {
+                    val settings = preferencesRepository.settingsFlow.first()
+                    StudyNotificationScheduler.scheduleDailyReminder(
+                        applicationContext,
+                        settings.reminderHour,
+                        settings.reminderMinute,
+                        settings.notificationsEnabled
+                    )
+                    StudyNotificationScheduler.triggerImmediateRefresh(this@MainActivity)
+                }
+            }
+        }
+    }
+
+    private fun requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val granted = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+            if (!granted) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_REQUEST_CODE
+                )
             }
         }
     }

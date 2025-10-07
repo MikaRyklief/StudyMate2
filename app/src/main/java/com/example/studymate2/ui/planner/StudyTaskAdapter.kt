@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import com.example.studymate2.R
 import com.example.studymate2.data.StudyTask
+import com.example.studymate2.util.SubjectColorProvider
 import com.example.studymate2.databinding.ItemStudyTaskBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class StudyTaskAdapter(
     private val onToggleComplete: (StudyTask) -> Unit,
@@ -30,6 +34,12 @@ class StudyTaskAdapter(
             binding.taskTitle.text = task.title
             binding.taskSubject.text = task.subject
             binding.taskMeta.text = formatMeta(task)
+            binding.taskTypeChip.setText(task.taskType.labelRes)
+            binding.taskTypeChip.chipBackgroundColor =
+                SubjectColorProvider.colorStateListForSubject(binding.root.context, task.subject)
+            binding.taskTypeChip.setTextColor(
+                ContextCompat.getColor(binding.root.context, android.R.color.white)
+            )
 
             binding.taskCompleted.setOnCheckedChangeListener(null)
             binding.taskCompleted.isChecked = task.completed
@@ -45,7 +55,14 @@ class StudyTaskAdapter(
         private fun formatMeta(task: StudyTask): String {
             val formatter = SimpleDateFormat("EEE, d MMM", Locale.getDefault())
             val due = formatter.format(Date(task.dueDate))
-            return "$due • ${task.durationMinutes} minutes"
+            val daysUntil = ((task.dueDate - System.currentTimeMillis()) / TimeUnit.DAYS.toMillis(1))
+                .coerceAtLeast(0)
+            return binding.root.context.getString(
+                R.string.planner_task_meta,
+                due,
+                task.durationMinutes,
+                daysUntil
+            )
         }
     }
 
