@@ -24,6 +24,14 @@ Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Ed
 
 ---
 
+## References
+* https://www.pubnub.com/tutorials/mobile-push-notifications-android-kotlin/
+* https://developer.android.com/develop/ui/views/notifications/build-notification
+* https://developer.android.com/identity/sign-in/credential-manager-siwg
+* https://firebase.google.com/docs/auth/android/google-signin
+* https://developer.android.com/codelabs/biometric-login#0
+
+  
 ##  Features
 
 | Category | Description |
