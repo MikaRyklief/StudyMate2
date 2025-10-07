@@ -33,8 +33,17 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         binding.signInButton.setOnClickListener {
+            binding.signInProgress.visibility = android.view.View.VISIBLE
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            navigateToMain()
         }
     }
 
@@ -46,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
+                binding.signInProgress.visibility = android.view.View.GONE
                 Snackbar.make(binding.root, "Google Sign-in failed.", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -55,12 +65,17 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                val user = auth.currentUser
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                binding.signInProgress.visibility = android.view.View.GONE
+                navigateToMain()
             } else {
+                binding.signInProgress.visibility = android.view.View.GONE
                 Snackbar.make(binding.root, "Authentication failed.", Snackbar.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun navigateToMain() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
