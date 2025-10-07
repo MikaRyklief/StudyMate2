@@ -159,14 +159,16 @@ class DashboardFragment : Fragment() {
             legend.isEnabled = false
             setNoDataText(getString(R.string.analytics_no_data))
             axisRight.isEnabled = false
+
             axisLeft.apply {
                 axisMinimum = 0f
                 textColor = ContextCompat.getColor(requireContext(), R.color.black)
                 setDrawGridLines(false)
-                position = YAxis.YAxisLabelPosition.OUTSIDE_CHART
+                setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
             }
+
             xAxis.apply {
-                position = XAxis.XAxisPosition.BOTTOM
+                setPosition(XAxis.XAxisPosition.BOTTOM)
                 granularity = 1f
                 textColor = ContextCompat.getColor(requireContext(), R.color.black)
                 setDrawGridLines(false)

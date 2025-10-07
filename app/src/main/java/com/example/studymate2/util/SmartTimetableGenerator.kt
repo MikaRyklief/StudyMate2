@@ -68,7 +68,7 @@ object SmartTimetableGenerator {
 
     private fun startOfDay(timeInMillis: Long): Long {
         val calendar = Calendar.getInstance().apply {
-            timeInMillis = timeInMillis
+            this.timeInMillis = timeInMillis
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
