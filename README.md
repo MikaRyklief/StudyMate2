@@ -1,4 +1,4 @@
-# 📘 StudyMate2 – Smart Student Planner App
+# 📘 StudyMate – Smart Student Planner App
 
 > **A Kotlin Android app for academic organization, productivity, and wellness.**
 
