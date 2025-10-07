@@ -1,103 +1,103 @@
-📘 StudyMate2 – Smart Student Planner App
+# 📘 StudyMate2 – Smart Student Planner App
 
-Developed by:
+> **A Kotlin Android app for academic organization, productivity, and wellness.**
 
-Mika Ryklief (ST10318273)
+---
 
-Steven Bomela (ST10304166)
+## 👥 Team Members
 
-Jesse Weeder (ST10320806)
+| Name | Student Number |
+|------|----------------|
+| Mika Ryklief | ST10318273 |
+| Steven Bomela | ST10304166 |
+| Jesse Weeder | ST10320806 |
+| Daniel van Loggerenberg | ST10310998 |
 
-Daniel van Loggerenberg (ST10310998)
+---
 
-🧩 Overview
+## 📖 Overview
 
-StudyMate2 is an Android application designed to help students manage their academic life efficiently. It combines productivity, motivation, and wellness through features such as:
+**StudyMate2** is a productivity and wellness app for students that helps manage academic tasks, exams, and schedules efficiently.  
+It combines **Google Calendar integration**, **gamification**, **analytics**, and **Pomodoro-based focus tools** to support academic success.
 
-Task and Exam Management
+Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Education (IIE)**.
 
-Smart Timetable Generation
+---
 
-Google Calendar Integration
+## 🚀 Features
 
-Gamification and Analytics
+| Category | Description |
+|-----------|-------------|
+| **Authentication** | Google Sign-In via Firebase Authentication + Biometric Login |
+| **Task Management** | Add, edit, delete, and view assignments, exams, and study sessions |
+| **Smart Timetable Generator** | Automatically creates a balanced study schedule |
+| **Google Calendar Sync** | Exports study sessions and exams to your Google Calendar |
+| **Analytics Dashboard** | Displays charts and trends using MPAndroidChart |
+| **Gamification** | Earn XP, streaks, and badges for consistency |
+| **Pomodoro Timer** | Focus timer with study/break cycles and wellness nudges |
+| **Offline Support** | Local Room database syncs with Firestore when online |
+| **Multilingual Support** | English and isiZulu/Afrikaans options |
 
-Pomodoro Timer and Wellness Tools
+---
 
-This app is developed as part of the PROG7314 POE module at The Independent Institute of Education (IIE).
+## 🧱 Tech Stack
 
-🚀 Core Features
-Category	Features
-Authentication	Google Sign-In via Firebase, optional biometric login
-Academic Organisation	Create, edit, and track tasks, assignments, and exams
-Calendar Integration	Sync study sessions and exams to Google Calendar
-Smart Timetable Generator	Automatically allocates study sessions based on deadlines
-Analytics Dashboard	Displays charts of study trends and task completion
-Gamification	XP, streaks, and badges to motivate consistency
-Wellness Tools	Pomodoro timer and motivational wellness nudges
-Offline Support	Uses Room database and syncs with Firestore when online
-Multilingual Support	English + isiZulu/Afrikaans
-🧱 Technologies Used
+| Component | Technology |
+|------------|-------------|
+| **Language** | Kotlin |
+| **IDE** | Android Studio (Hedgehog or later) |
+| **Architecture** | MVVM (Model–View–ViewModel) |
+| **Database** | Firebase Firestore + Room |
+| **Authentication** | Firebase Auth (Google SSO + BiometricPrompt API) |
+| **Charts & Analytics** | MPAndroidChart |
+| **UI Library** | Material Design 3 (Material Components) |
+| **Notifications** | AlarmManager + Firebase Messaging |
+| **Calendar Integration** | Android `CalendarContract` Provider |
 
-Language: Kotlin
+---
 
-IDE: Android Studio (Hedgehog or newer)
+## 📂 Project Structure
 
-Architecture: MVVM (Model–View–ViewModel)
-
-Database: Firebase Firestore + Room (for offline sync)
-
-Authentication: Firebase Auth (Google SSO + BiometricPrompt API)
-
-Charts & Analytics: MPAndroidChart
-
-UI Library: Material Design 3
-
-Notifications: Android AlarmManager + Firebase Messaging
-
-Calendar Integration: Android CalendarContract Provider
-
-📂 Project Structure
 StudyMate2/
+│
 ├── app/
-│   ├── src/main/java/com/example/studymate2/
-│   │   ├── ui/            # Fragments (Dashboard, Planner, Wellness, Analytics)
-│   │   ├── data/          # Data models (StudyTask, StudyBlock)
-│   │   ├── util/          # Utilities (SmartTimetableGenerator, ColorProvider)
-│   │   ├── notification/  # Notification logic
-│   │   └── viewmodel/     # ViewModels + Factories
-│   └── res/               # Layouts, drawables, and XML resources
-└── build.gradle
+│ ├── src/main/java/com/example/studymate2/
+│ │ ├── ui/ # Fragments (Dashboard, Planner, Analytics, Wellness)
+│ │ ├── data/ # Data models (StudyTask, StudyBlock, etc.)
+│ │ ├── util/ # Utilities (SmartTimetableGenerator, ColorProvider)
+│ │ ├── notification/ # Notification scheduling and triggers
+│ │ └── viewmodel/ # ViewModels and factories
+│ └── res/ # Layouts, drawables, values, etc.
+│
+├── build.gradle
+└── README.md
+---
 
-⚙️ Installation & Setup
-1. Prerequisites
+## ⚙️ Setup Instructions
 
-Android Studio 2023.3+
+### 1️⃣ Prerequisites
+- Android Studio **2023.3 (Hedgehog)** or newer  
+- Android SDK 24+  
+- A Firebase Project  
+- Google account for Calendar integration  
 
-Minimum SDK: 24 (Android 7.0)
-
-Target SDK: 34
-
-Firebase Project: Linked via google-services.json
-
-2. Clone the repository
-git clone https://github.com/<yourusername>/StudyMate2.git
+### 2️⃣ Clone the Repository
+```bash
+git clone https://github.com/<your-username>/StudyMate2.git
 cd StudyMate2
+3️⃣ Open in Android Studio
 
-3. Open in Android Studio
+Open Android Studio → File → Open...
 
-Launch Android Studio → Open an Existing Project.
+Select the cloned StudyMate2 project folder.
 
-Select the StudyMate2 directory.
+Let Gradle sync automatically.
 
-Allow Gradle to sync automatically.
+4️⃣ Connect to Firebase
 
-4. Configure Firebase
+Visit Firebase Console
 
-Go to Firebase Console
-.
-
-Add your Android app using your package name:
+Create a new project → Add Android App with package name:
 
 com.example.studymate2
 
@@ -107,56 +107,68 @@ Download the google-services.json file and place it in:
 app/google-services.json
 
 
-Ensure Firebase Authentication and Firestore Database are enabled.
+Enable:
 
-5. Add Google Calendar Permission
+Firebase Authentication (Google Sign-In)
+
+Cloud Firestore
+
+5️⃣ Grant Calendar Permissions
 
 Ensure your AndroidManifest.xml includes:
 
 <uses-permission android:name="android.permission.READ_CALENDAR" />
 <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
-▶️ Running the App
+6️⃣ Build & Run
 
-Connect an Android device or start an emulator.
+Connect an Android device or launch an emulator.
 
-Click Run ▶ in Android Studio.
+Click Run ▶️ in Android Studio.
 
-Sign in with Google when prompted.
+Log in with Google.
 
-Use the bottom navigation bar to explore:
+Explore features through the bottom navigation bar:
 
-Dashboard: Overview of progress and quick stats
+🏠 Dashboard
 
-Planner: Manage tasks, exams, and generate timetable
+📅 Planner
 
-Analytics: Visual charts using MPAndroidChart
+📊 Analytics
 
-Wellness: Pomodoro timer and motivational features
+🧘 Wellness
 
-📊 API Endpoints
+🧠 Key Components
+Class	Purpose
+DashboardFragment	Displays overall progress and analytics charts
+PlannerFragment	Handles task CRUD, Google Calendar sync, timetable generation
+StudyTaskViewModel	Central ViewModel for managing tasks
+SmartTimetableGenerator	Automatically creates study sessions
+StudyNotificationScheduler	Sends local notifications and reminders
+🧩 Common Errors & Fixes
+Issue	Cause	Fix
+Unresolved reference: position	Using property instead of setter	Use setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+'val' cannot be reassigned	Shadowed parameter name	Rename function variable or use this.
+Google Sign-In fails	Missing OAuth credentials	Check Firebase OAuth client and google-services.json
+Calendar not updating	Permissions not granted	Grant calendar permission at runtime
+📊 API Overview
 
-Firebase Functions (REST-style):
+Firebase REST-style Functions:
 
 Endpoint	Method	Description
 /tasks	GET, POST, PUT, DELETE	Manage tasks and exams
 /streaks	GET, POST	Track XP and streaks
-/analytics	GET, POST	Manage study metrics
-/pomodoro	GET, POST	Record focus sessions
-🧠 Key Classes
-Class	Description
-DashboardFragment	Displays progress and analytics overview
-PlannerFragment	Handles task CRUD, timetable generation, and calendar sync
-StudyTaskViewModel	Central ViewModel managing task data
-SmartTimetableGenerator	Automatically allocates study sessions
-StudyNotificationScheduler	Triggers local study reminders
-🧩 Troubleshooting
-Issue	Fix
-Unresolved reference: position	Use setPosition() instead of assigning directly
-'val' cannot be reassigned	Rename shadowed variables or use var
-Google sign-in fails	Check google-services.json and OAuth Client ID
-Calendar not updating	Ensure calendar permissions are granted at runtime
-🧾 License
+/analytics	GET, POST	Store and fetch study statistics
+/pomodoro	GET, POST	Log completed focus sessions📺 Demo Video: Watch on YouTube 
 
-This project was developed for educational purposes as part of the PROG7314 module at IIE.
-It is not intended for commercial release.
+❤️ Acknowledgements
+
+MPAndroidChart
+
+Firebase Android SDK
+
+Material Design 3
+
+IIE Programming 3D Module Manual (2025)
+
+“Study smarter, live better — your StudyMate for success.”
