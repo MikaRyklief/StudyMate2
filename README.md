@@ -15,7 +15,7 @@
 
 ---
 
-## 📖 Overview
+##  Overview
 
 **StudyMate** is a productivity and wellness app for students that helps manage academic tasks, exams, and schedules efficiently.  
 It combines **Google Calendar integration**, **gamification**, **analytics**, and **Pomodoro-based focus tools** to support academic success.
@@ -24,7 +24,7 @@ Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Ed
 
 ---
 
-## 🚀 Features
+##  Features
 
 | Category | Description |
 |-----------|-------------|
@@ -40,7 +40,15 @@ Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Ed
 
 ---
 
-## 🧱 Tech Stack
+##  Design Considerations
+* Made sure that text and background use contrasting colours which go together well to ensure that all text is visible and fits the design of the application
+* Contains a settings tab which allows users to choose their preferred language, ensuring that our app is inclusive and universal ![WhatsApp Image 2025-10-07 at 21 54 43_05f50fca](https://github.com/user-attachments/assets/7ef74e77-6ebf-4455-a292-b111b6721f79)
+* Allows users to change their time, allowing for users in different time zones to make use of the app
+* Made use of push notifications so that user doesn't have to go into the app to be reminded about tests or study time![WhatsApp Image 2025-10-07 at 21 54 44_be22a37f](https://github.com/user-attachments/assets/028ba56f-36e7-4b99-96e6-8e2fe50e5141)
+
+
+
+##  Tech Stack
 
 | Component | Technology |
 |------------|-------------|
@@ -56,7 +64,7 @@ Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Ed
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 StudyMate2/
 │
@@ -124,35 +132,39 @@ Ensure your AndroidManifest.xml includes:
 
 Connect an Android device or launch an emulator.
 
-Click Run ▶️ in Android Studio.
+Click Run in Android Studio.
 
-Log in with Google.
+Log in with Google. (Registered logins: ![WhatsApp Image 2025-10-07 at 21 59 11_8fccc41a](https://github.com/user-attachments/assets/5f5f139e-9395-4a68-8897-2d7ec54058c2)
 
 Explore features through the bottom navigation bar:
 
-🏠 Dashboard
+ Dashboard
 
-📅 Planner
+ Planner
 
-📊 Analytics
+ Analytics
 
-🧘 Wellness
+ Wellness
 
-🧠 Key Components
+ Key Components
 Class	Purpose
 DashboardFragment	Displays overall progress and analytics charts
 PlannerFragment	Handles task CRUD, Google Calendar sync, timetable generation
 StudyTaskViewModel	Central ViewModel for managing tasks
 SmartTimetableGenerator	Automatically creates study sessions
 StudyNotificationScheduler	Sends local notifications and reminders
-🧩 Common Errors & Fixes
+
+ Common Errors & Fixes
 Issue	Cause	Fix
 Unresolved reference: position	Using property instead of setter	Use setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
 'val' cannot be reassigned	Shadowed parameter name	Rename function variable or use this.
 Google Sign-In fails	Missing OAuth credentials	Check Firebase OAuth client and google-services.json
 Calendar not updating	Permissions not granted	Grant calendar permission at runtime
-📊 API Overview
 
+Utilization of GitHub Actions
+GitHub Actions was used to conduct the unit testing for the application to ensure everything runs well. Find screenshots below
+
+ API Overview
 Firebase REST-style Functions:
 
 Endpoint	Method	Description
@@ -161,7 +173,7 @@ Endpoint	Method	Description
 /analytics	GET, POST	Store and fetch study statistics
 /pomodoro	GET, POST	Log completed focus sessions📺 Demo Video: Watch on YouTube 
 
-❤️ Acknowledgements
+ Acknowledgements
 
 MPAndroidChart
 
