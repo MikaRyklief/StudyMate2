@@ -49,6 +49,8 @@ Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Ed
 
 ## Utilization of GitHub Actions
 GitHub Actions was used to conduct the unit testing for the application to ensure everything runs well. Find screenshots below
+<img width="1276" height="877" alt="image" src="https://github.com/user-attachments/assets/807cb5ea-bded-4eca-bd74-262bd703f3ee" />
+
 
 ## Utilization of AI
 * ChatGPT was used to troubleshoot our application crashing. Prompt and solution below:
