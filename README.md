@@ -38,6 +38,7 @@ Developed for the **PROG7314 POE (Part 2)** at **The Independent Institute of Ed
 | **Offline Support** | Local Room database syncs with Firestore when online |
 | **Multilingual Support** | English and isiZulu/Afrikaans options |
 
+| **Link to YouTube video showing these features: https://youtu.be/qWRgg0yIot8?si=cRk33FpJJLTJPrcd
 ---
 
 ##  Design Considerations
