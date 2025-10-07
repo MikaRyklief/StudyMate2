@@ -5,8 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [StudyTask::class], version = 1, exportSchema = false)
+@Database(entities = [StudyTask::class], version = 2, exportSchema = false)
 abstract class StudyDatabase : RoomDatabase() {
+
     abstract fun studyTaskDao(): StudyTaskDao
 
     companion object {
@@ -19,7 +20,10 @@ abstract class StudyDatabase : RoomDatabase() {
                     context.applicationContext,
                     StudyDatabase::class.java,
                     "study_mate_database"
-                ).build()
+                )
+                    // 👇 THIS LINE fixes your crash when schema changes
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }
