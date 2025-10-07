@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.StudyMate2" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme colors here -->
+    <style name="Theme.StudyMate2" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Main brand colors -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorAccent">@color/teal_200</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Backgrounds -->
+        <item name="android:colorBackground">@color/white</item>
+
+        <!-- Status/navigation bar behavior -->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

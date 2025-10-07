@@ -45,6 +45,7 @@ android {
 
 dependencies {
     // --- Default Compose + Android dependencies
+    implementation("androidx.fragment:fragment-ktx:1.8.3")
     implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

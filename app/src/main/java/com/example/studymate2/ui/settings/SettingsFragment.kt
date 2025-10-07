@@ -19,7 +19,7 @@ import com.example.studymate2.viewmodel.SettingsViewModel
 import com.example.studymate2.viewmodel.SettingsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.launch
 
 class SettingsFragment : Fragment() {
