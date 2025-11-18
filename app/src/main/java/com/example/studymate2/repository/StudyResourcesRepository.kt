@@ -6,44 +6,39 @@ import kotlinx.coroutines.withContext
 
 class StudyResourcesRepository(private val api: StudyApiService) {
     suspend fun fetchStudyResources(): List<StudyResource> = withContext(Dispatchers.IO) {
-        try {
-            val todos = api.fetchStudyTodos()
-            val mapped = todos.map {
-                StudyResource(
-                    id = it.id,
-                    title = it.title.capitalizeFirstLetter(),
-                    completed = it.completed,
-                    description = if (it.completed) {
-                        "Completed task suggestion: review notes and consolidate knowledge."
-                    } else {
-                        "Suggested focus: spend 25 minutes on this topic and take a 5-minute break."
-                    }
-                )
-            }
-            if (mapped.isNotEmpty()) mapped else offlineFallback
-        } catch (e: Exception) {
-            offlineFallback
-        }
+        curatedResources
     }
 
-    private val offlineFallback = listOf(
+    private val curatedResources = listOf(
         StudyResource(
             id = 1,
-            title = "Build an exam cram outline",
-            description = "List the top 3 topics for your next exam and assign 30-minute focus blocks this week.",
+            title = "Active recall toolkit",
+            description = "Download the spaced-repetition flashcard deck template with guidance on 30/60/90 day review cycles.",
             completed = false
         ),
         StudyResource(
             id = 2,
-            title = "Wellness reset",
-            description = "Do a 5-minute stretch and hydrate before starting your next Pomodoro cycle.",
+            title = "Deep work starter plan",
+            description = "A 4-session plan that pairs 50-minute focus blocks with short reflection prompts to improve retention.",
             completed = false
         ),
         StudyResource(
             id = 3,
-            title = "Review your wins",
-            description = "Check your completed tasks and badges to keep streak motivation high.",
+            title = "Exam readiness checklist",
+            description = "Printable checklist covering syllabus coverage, practice papers, formula sheet creation, and rest strategy.",
             completed = true
+        ),
+        StudyResource(
+            id = 4,
+            title = "Wellness micro-habits",
+            description = "Evidence-based mini routines: 5-minute stretch, 2-minute breathing reset, and hydration reminders.",
+            completed = true
+        ),
+        StudyResource(
+            id = 5,
+            title = "Group study playbook",
+            description = "Step-by-step guide for running a 45-minute peer study session with rotating teaching segments.",
+            completed = false
         )
     )
 }
@@ -54,7 +49,3 @@ data class StudyResource(
     val description: String,
     val completed: Boolean
 )
-
-private fun String.capitalizeFirstLetter(): String = replaceFirstChar { char ->
-    if (char.isLowerCase()) char.titlecase() else char.toString()
-}
