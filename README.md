@@ -61,9 +61,13 @@ GitHub Actions was used to conduct the unit testing for the application to ensur
 
 
 ## Utilization of AI
-* ChatGPT was used to troubleshoot our application crashing. Prompt and solution below:
+* ChatGPT was used to troubleshoot our application crashing, as well as to fix an error we had where we were unable to access our repository. Prompt and solution below:
 ![WhatsApp Image 2025-10-07 at 22 46 46_1d2079ec](https://github.com/user-attachments/assets/8e6016bd-bf6c-4cad-879b-f5f652d1b8e4)
 ![WhatsApp Image 2025-10-07 at 22 46 47_186f9e36](https://github.com/user-attachments/assets/a6cd6ca4-dcd0-4630-8b6a-d96a13261aa7)
+![WhatsApp Image 2025-11-18 at 23 03 28_576d795c](https://github.com/user-attachments/assets/479824c2-162a-4e53-a30b-cb96735e4e70)
+![WhatsApp Image 2025-11-18 at 23 03 35_fcda8e17](https://github.com/user-attachments/assets/c9f7d180-0fa0-43f8-9464-0c0020bb95d8)
+
+
 
 ##  Tech Stack
 
@@ -98,6 +102,107 @@ StudyMate2/
 └── README.md
 ---
 
+📢Release Notes
+The final version of StudyMate represents a major evolution from the initial prototype. While the prototype demonstrated only basic task creation and navigation, the completed release introduces a full suite of academic, motivational, and wellness features designed to support students holistically.
+
+Below is a complete list of everything that has been added, improved, or redesigned since the first prototype.
+
+✅ 1. Core Feature Enhancements (Prototype → Final Version)
+1.1 Authentication and Security
+Added since prototype:
+✅ Google Single Sign-On (SSO) using Firebase Authentication.
+✅ Biometric Authentication (Fingerprint/FaceID) via Android BiometricPrompt API.
+Improved secure session handling and auto-login experience.
+
+1.2 Task & Exam Management
+Added since prototype:
+✅ Full CRUD (create, read, update, delete) for tasks and exams.
+✅ Subject categorisation for organizing all academic activities.
+✅ Exam countdowns automatically calculated and displayed.
+Improved UI for adding deadlines, priorities, and notes.
+
+1.3 Notifications & Reminders
+Added since prototype:
+✔ Daily reminders (customisable time).
+✔ Exam countdown notifications.
+✔ Task completion alerts.
+✔ Wellness nudges (optional hydration/stretch reminders).
+
+1.4 Offline Mode
+Added since prototype:
+✔ Local Room database for offline task/exam creation.
+✔ Auto-sync with Firestore once online.
+✔ Network-aware workers (WorkManager) for background sync.
+
+1.5 Multilingual Support
+Added since prototype:
+English (default)
+Afrikaans
+isiZulu
+Includes:
+Dynamic string switching
+Activity recreation without crashing
+Settings-based language selector
+
+⭐ 2. Innovative Features Added 
+
+2.1 Smart Timetable Generator
+Auto-creates revision sessions based on:
+Upcoming deadlines
+Subject difficulty
+Exam proximity
+Workload distribution
+
+2.2 Gamification System
+XP points for completing tasks
+Streak tracking
+Badge unlocking
+Progress indicators
+
+2.3 Analytics Dashboard
+Weekly study time graph
+Task completion rates
+Subject-focused time distribution
+Insightful study tips based on behaviour
+
+2.4 Wellness Tools 
+Pomodoro timer
+Break reminders
+Hydration & wellbeing nudges
+
+2.5 Calendar Visualisation
+Weekly & monthly views
+Colour-coded by subject
+Upcoming tasks and exams integrated directly into calendar
+Drag-and-drop timetable editing (where supported)
+
+🎨 3. UI/UX Improvements Since Prototype
+Completely redesigned visual style using Material 3.
+New dashboard layout showing:
+Today’s tasks
+Upcoming exams
+Mini-calendar
+Cleaner navigation using the bottom navigation bar.
+Animations and smooth transitions added to improve usability.
+Updated settings screen with toggle controls, language selector, and reminder configuration.
+
+🔌 4. Backend & Infrastructure Upgrades Since Prototype
+Firebase Firestore backend integrated for all core data.
+Serverless REST-like operations via Firestore listeners.
+Offline sync implemented using Room + WorkManager.
+Secure data access via Firebase Auth rules (per-user read/write).
+Error handling & resilience added for low connectivity.
+
+🛠 5. Stability & Performance Enhancements
+Fixed crashes related to:
+Activity recreation during language switching
+View detachment issues
+Firestore permission mismatches
+Reduced unnecessary Firestore reads/writes.
+Optimised Worker scheduling to avoid battery drain.
+Implemented lifecycle-safe UI updates.
+
+---
 ## ⚙️ Setup Instructions
 
 ### 1️⃣ Prerequisites
