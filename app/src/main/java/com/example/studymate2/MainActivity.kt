@@ -25,6 +25,9 @@ import com.example.studymate2.ui.settings.SettingsFragment
 import com.example.studymate2.worker.CalendarSyncWorker
 import com.example.studymate2.worker.TaskSyncWorker
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.flow.first
@@ -37,7 +40,13 @@ class MainActivity : AppCompatActivity() {
     private val preferencesRepository by lazy {
         UserPreferencesRepository(applicationContext.userPreferencesDataStore)
     }
-
+    private val googleSignInClient: GoogleSignInClient by lazy {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        GoogleSignIn.getClient(this, gso)
+    }
     companion object {
         private const val CALENDAR_PERMISSION_REQUEST_CODE = 2001
         private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 2002
@@ -133,11 +142,13 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setMessage(R.string.settings_sign_out_confirmation)
             .setPositiveButton(R.string.settings_sign_out_positive) { _, _ ->
-                auth.signOut()
-                WorkManager.getInstance(this).cancelUniqueWork("task_sync")
-                WorkManager.getInstance(this).cancelUniqueWork("calendar_sync")
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                googleSignInClient.signOut().addOnCompleteListener {
+                    auth.signOut()
+                    WorkManager.getInstance(this).cancelUniqueWork("task_sync")
+                    WorkManager.getInstance(this).cancelUniqueWork("calendar_sync")
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                }
             }
             .setNegativeButton(R.string.settings_sign_out_negative, null)
             .show()

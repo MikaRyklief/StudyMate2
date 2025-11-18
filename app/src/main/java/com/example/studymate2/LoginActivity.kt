@@ -70,7 +70,14 @@ class LoginActivity : AppCompatActivity() {
         // Google Sign-In button click
         binding.signInButton.setOnClickListener {
             binding.signInProgress.visibility = View.VISIBLE
-            signInLauncher.launch(googleSignInClient.signInIntent)
+            // Ensure the user is prompted to pick an account instead of reusing the last session
+            googleSignInClient.signOut().addOnCompleteListener {
+                signInLauncher.launch(googleSignInClient.signInIntent)
+            }
+        }
+
+        binding.biometricButton.setOnClickListener {
+            promptBiometric()
         }
 
         binding.biometricButton.setOnClickListener {
