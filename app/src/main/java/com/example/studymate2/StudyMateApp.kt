@@ -31,15 +31,12 @@ class StudyMateApp : Application() {
         super.onCreate()
         StudyNotificationScheduler.createChannels(this)
 
-        val auth = FirebaseAuth.getInstance()
-        gamificationRepository.setActiveUser(auth.currentUser?.uid)
-        auth.addAuthStateListener { firebaseAuth ->
-            gamificationRepository.setActiveUser(firebaseAuth.currentUser?.uid)
-        }
-
         FirebaseFirestore.getInstance().firestoreSettings = firestoreSettings {
             isPersistenceEnabled = true
         }
+
+        gamificationRepository.setActiveUser(GamificationRepository.DEFAULT_USER_ID)
+
         runBlocking {
             val repository = UserPreferencesRepository(userPreferencesDataStore)
             val settings = repository.settingsFlow.first()

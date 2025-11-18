@@ -7,50 +7,36 @@ import com.example.studymate2.data.TaskType
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class GamificationRepository(private val dao: GamificationDao) {
 
-    private val activeUserId = MutableStateFlow<String?>(null)
+    private var activeUserId: Int = DEFAULT_USER_ID
 
-    val profile: Flow<GamificationProfile> = activeUserId.flatMapLatest { userId ->
-        if (userId.isNullOrBlank()) {
-            flowOf(GamificationProfile(userId = ""))
-        } else {
-            dao.observeProfileForUser(userId).map { existing ->
-                existing ?: GamificationProfile(userId = userId)
-            }
-        }
+    val profile: Flow<GamificationProfile>
+        get() = dao.observeProfile(activeUserId)
+            .map { it ?: GamificationProfile(id = activeUserId) }
+
+    fun setActiveUser(userId: Int) {
+        activeUserId = userId
     }
-
-    fun updateActiveUser(userId: String?) {
-        activeUserId.value = userId
-    }
-
-    @Deprecated("Use updateActiveUser")
-    fun setActiveUser(userId: String?) = updateActiveUser(userId)
 
     suspend fun recordTaskCompletion(task: StudyTask) {
-        val userId = activeUserId.value ?: return
         val xpGain = when (task.taskType) {
             TaskType.EXAM -> 50
             TaskType.REVISION -> 20
             TaskType.ASSIGNMENT -> 15
         }
-        applyProgress(userId, xpGain)
+        applyProgress(xpGain)
     }
 
     suspend fun recordFocusSession(minutes: Int) {
-        val userId = activeUserId.value ?: return
         val xpGain = 5 + (minutes / 10)
-        applyProgress(userId, xpGain, focusBonus = true)
+        applyProgress(xpGain, focusBonus = true)
     }
 
-    private suspend fun applyProgress(userId: String, xpGain: Int, focusBonus: Boolean = false) {
-        val current = dao.getProfileForUser(userId) ?: GamificationProfile(userId = userId)
+    private suspend fun applyProgress(xpGain: Int, focusBonus: Boolean = false) {
+        val current = dao.getProfileOnce(activeUserId) ?: GamificationProfile(id = activeUserId)
         val today = startOfDay(System.currentTimeMillis())
         val yesterday = today - TimeUnit.DAYS.toMillis(1)
 
@@ -90,6 +76,7 @@ class GamificationRepository(private val dao: GamificationDao) {
     }
 
     companion object {
+        const val DEFAULT_USER_ID = 1
         const val BADGE_FIRST_STEP = "first_step"
         const val BADGE_STREAK_3 = "streak_3"
         const val BADGE_STREAK_7 = "streak_7"
