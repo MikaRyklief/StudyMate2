@@ -92,6 +92,14 @@ class SettingsFragment : Fragment() {
             languageOptions.map { getString(it.labelRes) }
         )
         binding.languageDropdown.setAdapter(adapter)
+        binding.languageDropdown.setOnClickListener {
+            binding.languageDropdown.showDropDown()
+        }
+        binding.languageDropdown.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.languageDropdown.showDropDown()
+            }
+        }
         binding.languageDropdown.setOnItemClickListener { _, _, position, _ ->
             val option = languageOptions[position]
             viewModel.updateLanguage(option.code)
