@@ -1,21 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">StudyMate</string>
+    <string name="default_web_client_id">869054972153-dd3rsov5qs71i2e0b5n4ojv5g1htvq61.apps.googleusercontent.com</string>
     <string name="nav_dashboard">Paneel</string>
-    <string name="nav_planner">Skeduleerder</string>
+    <string name="nav_planner">Beplanner</string>
     <string name="nav_resources">Hulpbronne</string>
     <string name="nav_settings">Instellings</string>
-    <string name="login_title">Welkom by StudyMate</string>
-    <string name="login_subtitle">Teken vinnig aan met jou Google-profiel om take en eksamens te bestuur.</string>
-    <string name="login_google_button">Teken in met Google</string>
+    <string name="dashboard_default_greeting">Hallo, student!</string>
+    <string name="dashboard_greeting_with_name">Hallo, %1$s!</string>
+    <string name="dashboard_quote">"Klein vordering elke dag lei tot groot resultate."</string>
+    <string name="dashboard_progress">Weeklikse vordering</string>
+    <string name="dashboard_progress_placeholder">Jy het nog geen studiesessies bygevoeg nie.</string>
+    <string name="dashboard_focus_timer">Fokustimer</string>
+    <string name="dashboard_start">Begin</string>
+    <string name="dashboard_pause">Pouse</string>
+    <string name="dashboard_reset">Herstel</string>
+    <string name="dashboard_upcoming">Opkomende fokussessies</string>
+    <string name="dashboard_no_tasks">Voeg 'n taak in die beplanner by om dit hier te sien.</string>
+
+    <string name="gamification_title">Gamifikasie</string>
+    <string name="gamification_level_placeholder">Vlak 1 · 0 XP</string>
+    <string name="gamification_level_label">Vlak %1$d · %2$d XP tot volgende vlak</string>
+    <string name="gamification_streak_placeholder">0-dagreeks</string>
+    <plurals name="gamification_streak">
+        <item quantity="one">%d-dagreeks</item>
+        <item quantity="other">%d-dagreeks</item>
+    </plurals>
+    <string name="gamification_badges_placeholder">Nog geen kentekens nie</string>
+    <string name="gamification_badge_first">Eerste taak voltooi</string>
+    <string name="gamification_badge_streak3">3-dagreeks</string>
+    <string name="gamification_badge_streak7">7-dagreeks</string>
+    <string name="gamification_badge_century">100 XP verdien</string>
+    <string name="gamification_badge_focus">Fokus klaar voltooi</string>
+
+    <string name="planner_subtitle">Organiseer jou week deur gefokusde studiesessies by te voeg.</string>
+    <string name="planner_empty">Jy het nog geen take geskeduleer nie. Tik die +-knoppie om te begin.</string>
+    <string name="planner_add_task">Voeg studietaak by</string>
+    <string name="planner_delete">Skrap studietaak</string>
+    <string name="planner_delete_confirm">Is jy seker jy wil hierdie studiesessie verwyder?</string>
+    <string name="planner_task_title_hint">Onderwerp of taak</string>
+    <string name="planner_task_subject_hint">Vak</string>
+    <string name="planner_due_date_placeholder">Kies 'n sperdatum</string>
+    <string name="planner_pick_date">Kies datum</string>
+    <string name="planner_duration_hint">Geskatte fokustyd (minute)</string>
+    <string name="planner_error_required">Voltooi asseblief al die velde om voort te gaan.</string>
+    <string name="planner_error_duration">Voer 'n positiewe fokustyd in.</string>
+    <string name="planner_saved">Studiesessie geskeduleer!</string>
+    <string name="planner_deleted">Studiesessie verwyder.</string>
+    <string name="planner_generate_timetable">Slim rooster</string>
+    <string name="planner_view_list">Lys</string>
+    <string name="planner_view_week">Week</string>
+    <string name="planner_view_month">Maand</string>
+    <string name="planner_timetable_empty">Genereer 'n slim rooster om jou week te vul.</string>
+    <string name="planner_timetable_generated">Slim rooster opgedateer.</string>
+    <string name="planner_timetable_empty_message">Voeg take by of pas sperdatums aan om 'n rooster te skep.</string>
+    <string name="planner_task_meta">%1$s • %2$d min • %3$d dae oor</string>
+    <string name="planner_block_time">%1$s • %2$s – %3$s</string>
+    <string name="planner_task_type_title">Watter tipe fokussessie is dit?</string>
+    <string name="planner_calendar_subject">%1$s • %2$s</string>
+    <string name="planner_calendar_due">Sperdatum %1$s</string>
+    <string name="planner_calendar_empty">Nog geen sessies vir hierdie dag nie.</string>
+    <string name="planner_calendar_permission_prompt">Verleen kalendertoestemming om take te sinkroniseer.</string>
+    <string name="planner_calendar_provider_missing">Geen kalenderdiens gevind nie.</string>
+    <string name="planner_calendar_not_found">Geen skryfbare kalenders op hierdie toestel gevind nie.</string>
+    <string name="planner_calendar_added">By Google Calendar gevoeg!</string>
+    <string name="planner_calendar_failed">Kon nie gebeurtenis byvoeg nie.</string>
+
+    <string name="resources_subtitle">Lewendige opvoedkundige hulpbronne vanaf die publieke API-katalogus.</string>
+    <string name="resources_empty_state">Geen aanlyn studiewenke is verkry nie. Kontroleer jou verbinding en verfris.</string>
+    <string name="resources_completed">Voltooi</string>
+    <string name="resources_suggested">Voorgestelde fokus</string>
+
+    <string name="settings_account_name_placeholder">Leerling</string>
+    <string name="settings_notifications">Studieherinneringe</string>
+    <string name="settings_enable_notifications">Skakel daaglikse herinneringskennisgewing aan</string>
+    <string name="settings_enable_wellness">Skakel welstand-aanmanings aan</string>
+    <string name="settings_reminder_time_placeholder">Herinnering gestel vir 18:00</string>
+    <string name="settings_change_time">Verander tyd</string>
+    <string name="settings_display_name_hint">Vertoonnaam</string>
+    <string name="settings_update_display_name">Werk vertoonnaam by</string>
+    <string name="settings_sign_out">Teken uit</string>
     <string name="settings_language_title">Taal</string>
     <string name="settings_language_hint">Kies jou voorkeurtaal</string>
     <string name="settings_language_applied">Taal opgedateer.</string>
     <string name="language_english">Engels</string>
     <string name="language_isizulu">isiZulu</string>
     <string name="language_afrikaans">Afrikaans</string>
-    <string name="resources_subtitle">Gekeurde studiewenke van die StudyMate API of plaaslike voorstelle.</string>
-    <string name="resources_empty_state">Geen wenke beskikbaar nie. Verfris of probeer weer later.</string>
-    <string name="resources_completed">Afgehandel</string>
-    <string name="resources_suggested">Voorgestelde fokus</string>
+    <string name="login_title">Welkom by StudyMate</string>
+    <string name="login_subtitle">Meld aan met jou studentrekening om voort te gaan.</string>
+    <string name="login_logo">StudyMate-logo</string>
+
+    <string name="settings_notifications_enabled">Kennisgewings aangeskakel</string>
+    <string name="settings_notifications_disabled">Kennisgewings afgeskakel</string>
+    <string name="settings_reminder_updated">Herinnering geskeduleer vir %1$02d:%2$02d</string>
+    <string name="settings_display_name_updated">Vertoonnaam opgedateer</string>
+    <string name="settings_display_name_invalid">Voer 'n vertoonnaam in om voort te gaan.</string>
+    <string name="settings_sign_out_confirmation">Is jy seker jy wil uitteken?</string>
+    <string name="settings_sign_out_positive">Teken uit</string>
+    <string name="settings_sign_out_negative">Kanselleer</string>
+
+    <string name="dashboard_progress_value">%1$d van %2$d fokussessies voltooi</string>
+    <string name="auth_required">Meld asseblief aan om voort te gaan.</string>
+
+    <string name="task_type_assignment">Opdrag</string>
+    <string name="task_type_exam">Eksamen</string>
+    <string name="task_type_revision">Hersiening</string>
+
+    <string name="analytics_title">Analise</string>
+    <string name="analytics_weekly_hours">Weeklikse studieur</string>
+    <string name="analytics_insight">Jy het %1$d%% van jou studietyd aan %2$s spandeer verlede week. Balans jou vakke wys.</string>
+    <string name="analytics_insight_placeholder">Skep take om persoonlike insigte te ontsluit.</string>
+    <string name="analytics_no_data">Voeg studiesessies by om jou analise te sien.</string>
+
+    <string name="login_highlight_notifications">Mis nooit 'n sperdatum met slim herinnerings vir opdragte en eksamens nie.</string>
+    <string name="login_highlight_calendar">Bou weeklikse studieplanne outomaties uit jou take.</string>
+    <string name="login_highlight_analytics">Verstaan jou vordering met visuele dashboards.</string>
+    <string name="login_feature_title">Hoekom leerders van StudyMate hou</string>
+    <string name="login_language_hint">Skakel in Instellings tussen Engels, isiZulu of Afrikaans.</string>
+
+    <string name="biometric_button">Gebruik biometrie om oop te sluit</string>
+    <string name="biometric_title">Bevestig dat jy dit is</string>
+    <string name="biometric_subtitle">Veilige aanmelding met jou vingerafdruk of gesig</string>
+    <string name="biometric_negative">Gebruik eerder Google</string>
+
+    <string name="calendar_permission_granted">Kalendertoestemming toegestaan</string>
+    <string name="calendar_permission_denied">Kalendertoestemming geweier</string>
+
+    <string name="notification_channel_daily_name">Daaglikse studieherinneringe</string>
+    <string name="notification_channel_daily_desc">Sagkens aanmanings om jou studiereeks aan te hou.</string>
+    <string name="notification_channel_deadline_name">Sperdatumberigte</string>
+    <string name="notification_channel_deadline_desc">Waarskuwings vir dringende opdragte en eksamens.</string>
+    <string name="notification_channel_wellness_name">Welstand-aanmanings</string>
+    <string name="notification_channel_wellness_desc">Sagkens herinnerings om te hidreer, strek en asem te haal.</string>
+
+    <string name="wellness_nudge_title">Welstandspous</string>
+    <string-array name="wellness_nudges">
+    <item>Tyd vir 'n waterbreek. Hidrasie versterk fokus!</item>
+    <item>Staan op en strek vir 'n minuut om jou houding te herstel.</item>
+    <item>Maak jou oë toe, asem vyf keer diep in, en gaan dan voort.</item>
+    <item>Kort stappie: 'n paar tree kan energie gee.</item>
+    <item>Goeie werk! Neem 'n gesonde happie om jou brein gelukkig te hou.</item>
+    </string-array>
+
+    <string name="notification_daily_title">Vandag se fokus</string>
+    <string name="notification_daily_body">Volgende: %1$s oor %2$d dae. Kom ons begin!</string>
+    <string name="notification_assignment_title">Opdrag verval binnekort</string>
+    <string name="notification_assignment_body">%1$s verval oor %2$d dae. Beplan vandag 'n studiesessie.</string>
+    <string name="notification_exam_countdown">%1$d dae tot jou %2$s-eksamen.</string>
 </resources>

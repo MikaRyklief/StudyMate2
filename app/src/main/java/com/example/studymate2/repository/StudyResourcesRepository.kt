@@ -1,12 +1,33 @@
 package com.example.studymate2.repository
 
+import com.example.studymate2.network.PublicApiEntry
 import com.example.studymate2.network.StudyApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class StudyResourcesRepository(private val api: StudyApiService) {
     suspend fun fetchStudyResources(): List<StudyResource> = withContext(Dispatchers.IO) {
-        curatedResources
+        val apiEntries = runCatching { api.fetchEducationApis() }.getOrNull()?.entries.orEmpty()
+        val mapped = apiEntries
+            .filter { it.apiName.isNotBlank() || it.description.isNotBlank() }
+            .take(12)
+            .mapIndexed { index, entry -> entry.toStudyResource(index + 1) }
+
+        if (mapped.isNotEmpty()) mapped else curatedResources
+    }
+
+    private fun PublicApiEntry.toStudyResource(id: Int): StudyResource {
+        val sourceNote = link.takeIf { it.isNotBlank() }?.let { "Source: $it" }.orEmpty()
+        val summary = listOf(description.trim(), sourceNote)
+            .filter { it.isNotBlank() }
+            .joinToString(separator = " • ")
+
+        return StudyResource(
+            id = id,
+            title = apiName,
+            description = summary.ifBlank { apiName },
+            completed = auth.isNullOrBlank() && https
+        )
     }
 
     private val curatedResources = listOf(
