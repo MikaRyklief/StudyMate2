@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StudyMate</string>
+    <string name="nav_dashboard">Paneel</string>
+    <string name="nav_planner">Skeduleerder</string>
+    <string name="nav_resources">Hulpbronne</string>
+    <string name="nav_settings">Instellings</string>
+    <string name="login_title">Welkom by StudyMate</string>
+    <string name="login_subtitle">Teken vinnig aan met jou Google-profiel om take en eksamens te bestuur.</string>
+    <string name="login_google_button">Teken in met Google</string>
+    <string name="settings_language_title">Taal</string>
+    <string name="settings_language_hint">Kies jou voorkeurtaal</string>
+    <string name="settings_language_applied">Taal opgedateer.</string>
+    <string name="language_english">Engels</string>
+    <string name="language_isizulu">isiZulu</string>
+    <string name="language_afrikaans">Afrikaans</string>
+    <string name="resources_subtitle">Gekeurde studiewenke van die StudyMate API of plaaslike voorstelle.</string>
+    <string name="resources_empty_state">Geen wenke beskikbaar nie. Verfris of probeer weer later.</string>
+    <string name="resources_completed">Afgehandel</string>
+    <string name="resources_suggested">Voorgestelde fokus</string>
+</resources>

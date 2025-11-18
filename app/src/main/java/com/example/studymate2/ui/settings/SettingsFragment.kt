@@ -34,7 +34,8 @@ class SettingsFragment : Fragment() {
 
     private val languageOptions = listOf(
         LanguageOption("en", R.string.language_english),
-        LanguageOption("zu", R.string.language_isizulu)
+        LanguageOption("zu", R.string.language_isizulu),
+        LanguageOption("af", R.string.language_afrikaans)
     )
 
     private val viewModel: SettingsViewModel by viewModels {
@@ -95,6 +96,7 @@ class SettingsFragment : Fragment() {
             val option = languageOptions[position]
             viewModel.updateLanguage(option.code)
             LocaleManager.apply(option.code)
+            requireActivity().recreate()
             Snackbar.make(binding.root, R.string.settings_language_applied, Snackbar.LENGTH_SHORT).show()
         }
     }

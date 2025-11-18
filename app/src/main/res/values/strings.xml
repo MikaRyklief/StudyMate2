@@ -81,6 +81,7 @@
     <string name="settings_language_applied">Language updated.</string>
     <string name="language_english">English</string>
     <string name="language_isizulu">isiZulu</string>
+    <string name="language_afrikaans">Afrikaans</string>
     <string name="login_title">Welcome to StudyMate</string>
     <string name="login_subtitle">Sign in with your student account to continue.</string>
     <string name="login_logo">StudyMate logo</string>

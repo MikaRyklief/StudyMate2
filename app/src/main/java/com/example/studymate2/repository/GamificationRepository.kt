@@ -7,29 +7,50 @@ import com.example.studymate2.data.TaskType
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 class GamificationRepository(private val dao: GamificationDao) {
 
-    val profile: Flow<GamificationProfile> = dao.observeProfile()
-        .map { it ?: GamificationProfile() }
+    private val activeUserId = MutableStateFlow<String?>(null)
+
+    val profile: Flow<GamificationProfile> = activeUserId.flatMapLatest { userId ->
+        if (userId.isNullOrBlank()) {
+            flowOf(GamificationProfile(userId = ""))
+        } else {
+            dao.observeProfileForUser(userId).map { existing ->
+                existing ?: GamificationProfile(userId = userId)
+            }
+        }
+    }
+
+    fun updateActiveUser(userId: String?) {
+        activeUserId.value = userId
+    }
+
+    @Deprecated("Use updateActiveUser")
+    fun setActiveUser(userId: String?) = updateActiveUser(userId)
 
     suspend fun recordTaskCompletion(task: StudyTask) {
+        val userId = activeUserId.value ?: return
         val xpGain = when (task.taskType) {
             TaskType.EXAM -> 50
             TaskType.REVISION -> 20
             TaskType.ASSIGNMENT -> 15
         }
-        applyProgress(xpGain)
+        applyProgress(userId, xpGain)
     }
 
     suspend fun recordFocusSession(minutes: Int) {
+        val userId = activeUserId.value ?: return
         val xpGain = 5 + (minutes / 10)
-        applyProgress(xpGain, focusBonus = true)
+        applyProgress(userId, xpGain, focusBonus = true)
     }
 
-    private suspend fun applyProgress(xpGain: Int, focusBonus: Boolean = false) {
-        val current = dao.getProfileOnce() ?: GamificationProfile()
+    private suspend fun applyProgress(userId: String, xpGain: Int, focusBonus: Boolean = false) {
+        val current = dao.getProfileForUser(userId) ?: GamificationProfile(userId = userId)
         val today = startOfDay(System.currentTimeMillis())
         val yesterday = today - TimeUnit.DAYS.toMillis(1)
 
