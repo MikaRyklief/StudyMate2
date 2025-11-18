@@ -1,5 +1,7 @@
 # 📘 StudyMate – Smart Student Planner App
 
+GitHub Link: https://github.com/VCCT-PROG7314-2025-G2/StudyMate_Part2
+
 > **A Kotlin Android app for academic organization, productivity, and wellness.**
 
 ---
