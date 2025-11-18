@@ -10,12 +10,14 @@ import com.example.studymate2.StudyMateApp
 import com.example.studymate2.data.StudyTask
 import com.example.studymate2.data.StudyTaskRepository
 import com.example.studymate2.data.TaskType
+import com.example.studymate2.repository.GamificationRepository
 import kotlinx.coroutines.launch
 
 class StudyTaskViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: StudyTaskRepository =
         (application as StudyMateApp).taskRepository
-
+    private val gamificationRepository: GamificationRepository =
+        (application as StudyMateApp).gamificationRepository
     val allTasks = repository.allTasks.asLiveData()
 
     fun addTask(
@@ -40,7 +42,11 @@ class StudyTaskViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun toggleTaskCompletion(task: StudyTask) {
         viewModelScope.launch {
-            repository.update(task.copy(completed = !task.completed))
+            val updated = task.copy(completed = !task.completed)
+            repository.update(updated)
+            if (!task.completed && updated.completed) {
+                gamificationRepository.recordTaskCompletion(updated)
+            }
         }
     }
 

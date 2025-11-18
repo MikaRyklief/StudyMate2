@@ -8,6 +8,10 @@
     <string name="login_highlight_analytics">Qonda intuthuko yakho ngamashadi nezibalo.</string>
     <string name="login_feature_title">Kungani abafundi bethanda i-StudyMate</string>
     <string name="login_language_hint">Shintsha phakathi kwesiNgisi nesiZulu noma nini kuzilungiselelo.</string>
+    <string name="biometric_button">Vula ngeminwe noma ubuso</string>
+    <string name="biometric_title">Qinisekisa ukuthi ungubani</string>
+    <string name="biometric_subtitle">Sebenzisa ubuso noma umunwe ukuze uvikele imininingwane yakho</string>
+    <string name="biometric_negative">Sebenzisa i-Google esikhundleni salokho</string>
     <string name="planner_add_task">Engeza umsebenzi wokufunda</string>
     <string name="planner_generate_timetable">Uhlelo oluhlakaniphile</string>
     <string name="planner_view_list">Uhlu</string>
@@ -41,6 +45,7 @@
     <string name="settings_language_applied">Ulimi seluvuselelwe.</string>
     <string name="language_english">IsiNgisi</string>
     <string name="language_isizulu">isiZulu</string>
+    <string name="settings_enable_wellness">Vumela izikhumbuzo zokuphila kahle</string>
     <string name="calendar_permission_granted">Imvume yekhalenda inikiwe</string>
     <string name="calendar_permission_denied">Imvume yekhalenda inqatshelwe</string>
     <string name="notification_daily_title">Umsebenzi wanamuhla</string>
@@ -52,4 +57,29 @@
     <string name="notification_channel_daily_desc">Izikhumbuzo ezithambile zokugcina uhlelo lwakho lokufunda.</string>
     <string name="notification_channel_deadline_name">Izaziso zemigqa yesikhathi</string>
     <string name="notification_channel_deadline_desc">Izixwayiso zemisebenzi ephuthumayo nezibalo zesivivinyo.</string>
+    <string name="notification_channel_wellness_name">Izikhumbuzo zokuphila kahle</string>
+    <string name="notification_channel_wellness_desc">Izikhumbuzo ezithambile zokuphuza amanzi, ukwelula, nokuphumula kancane.</string>
+    <string name="wellness_nudge_title">Thatha ikhefu elincane</string>
+    <string-array name="wellness_nudges">
+        <item>Phuza amanzi manje – uketshezi luyasiza ukugxila.</item>
+        <item>Sukuma uwelule umzimba umzuzu owodwa.</item>
+        <item>Vala amehlo, uphefumule ngokujulile izikhathi ezingu-5 bese uqhubeka.</item>
+        <item>Hamba kancane; izinyathelo ezimbalwa zingakhuphula amandla.</item>
+        <item>Umsebenzi omuhle! Thatha ukudla okunempilo ukuvuselela ubuchopho.</item>
+    </string-array>
+
+    <string name="gamification_title">Amabhaji</string>
+    <string name="gamification_level_placeholder">Izinga 1 · 0 XP</string>
+    <string name="gamification_level_label">Izinga %1$d · %2$d XP ukuya ezingeni elilandelayo</string>
+    <string name="gamification_streak_placeholder">Uchungechunge losuku olu-0</string>
+    <plurals name="gamification_streak">
+        <item quantity="one">Uchungechunge losuku eli-%d</item>
+        <item quantity="other">Uchungechunge losuku eli-%d</item>
+    </plurals>
+    <string name="gamification_badges_placeholder">Awekho amabheji okwamanje</string>
+    <string name="gamification_badge_first">Umsebenzi wokuqala uqediwe</string>
+    <string name="gamification_badge_streak3">Uchungechunge lwezinsuku ezi-3</string>
+    <string name="gamification_badge_streak7">Uchungechunge lwezinsuku ezi-7</string>
+    <string name="gamification_badge_century">100 XP utholiwe</string>
+    <string name="gamification_badge_focus">Isikhathi sokugxila siqediwe</string>
 </resources>

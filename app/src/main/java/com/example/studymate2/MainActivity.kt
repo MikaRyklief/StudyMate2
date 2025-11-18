@@ -23,6 +23,7 @@ import com.example.studymate2.ui.planner.PlannerFragment
 import com.example.studymate2.ui.resources.ResourcesFragment
 import com.example.studymate2.ui.settings.SettingsFragment
 import com.example.studymate2.worker.CalendarSyncWorker
+import com.example.studymate2.worker.TaskSyncWorker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.TimeUnit
@@ -60,13 +61,22 @@ class MainActivity : AppCompatActivity() {
             openFragment(DashboardFragment(), R.string.nav_dashboard)
         }
 
-        checkCalendarPermissionAndScheduleSync()
         observePreferences()
     }
 
     override fun onStart() {
         super.onStart()
-        ensureAuthenticated()
+        val user = auth.currentUser
+        if (user == null) {
+            WorkManager.getInstance(this).cancelUniqueWork("task_sync")
+            WorkManager.getInstance(this).cancelUniqueWork("calendar_sync")
+            Snackbar.make(binding.root, R.string.auth_required, Snackbar.LENGTH_SHORT).show()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        } else {
+            checkCalendarPermissionAndScheduleSync()
+            scheduleTaskSync()
+        }
     }
 
     private fun setupBottomNavigation() {
@@ -100,15 +110,6 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun ensureAuthenticated() {
-        val user = auth.currentUser
-        if (user == null) {
-            Snackbar.make(binding.root, R.string.auth_required, Snackbar.LENGTH_SHORT).show()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
-    }
-
     private fun observePreferences() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -118,6 +119,10 @@ class MainActivity : AppCompatActivity() {
                         settings.reminderHour,
                         settings.reminderMinute,
                         settings.notificationsEnabled
+                    )
+                    StudyNotificationScheduler.scheduleWellnessNudges(
+                        applicationContext,
+                        settings.wellnessNudgesEnabled
                     )
                 }
             }
@@ -129,6 +134,8 @@ class MainActivity : AppCompatActivity() {
             .setMessage(R.string.settings_sign_out_confirmation)
             .setPositiveButton(R.string.settings_sign_out_positive) { _, _ ->
                 auth.signOut()
+                WorkManager.getInstance(this).cancelUniqueWork("task_sync")
+                WorkManager.getInstance(this).cancelUniqueWork("calendar_sync")
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
@@ -204,10 +211,36 @@ class MainActivity : AppCompatActivity() {
                         settings.reminderMinute,
                         settings.notificationsEnabled
                     )
+                    StudyNotificationScheduler.scheduleWellnessNudges(
+                        applicationContext,
+                        settings.wellnessNudgesEnabled
+                    )
                     StudyNotificationScheduler.triggerImmediateRefresh(this@MainActivity)
                 }
             }
         }
+    }
+
+    private fun scheduleTaskSync() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val periodicRequest = PeriodicWorkRequestBuilder<TaskSyncWorker>(2, TimeUnit.HOURS)
+            .setConstraints(constraints)
+            .build()
+
+        val oneTimeRequest = OneTimeWorkRequestBuilder<TaskSyncWorker>()
+            .setConstraints(constraints)
+            .build()
+
+        val workManager = WorkManager.getInstance(this)
+        workManager.enqueueUniquePeriodicWork(
+            "task_sync",
+            ExistingPeriodicWorkPolicy.KEEP,
+            periodicRequest
+        )
+        workManager.enqueue(oneTimeRequest)
     }
 
     private fun requestNotificationPermissionIfNeeded() {

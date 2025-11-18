@@ -16,6 +16,21 @@
     <string name="dashboard_reset">Reset</string>
     <string name="dashboard_upcoming">Upcoming focus sessions</string>
     <string name="dashboard_no_tasks">Add a task in the planner to see it here.</string>
+
+    <string name="gamification_title">Gamification</string>
+    <string name="gamification_level_placeholder">Level 1 · 0 XP</string>
+    <string name="gamification_level_label">Level %1$d · %2$d XP toward next level</string>
+    <string name="gamification_streak_placeholder">0-day streak</string>
+    <plurals name="gamification_streak">
+        <item quantity="one">%d-day streak</item>
+        <item quantity="other">%d-day streak</item>
+    </plurals>
+    <string name="gamification_badges_placeholder">No badges yet</string>
+    <string name="gamification_badge_first">First task completed</string>
+    <string name="gamification_badge_streak3">3-day streak</string>
+    <string name="gamification_badge_streak7">7-day streak</string>
+    <string name="gamification_badge_century">100 XP earned</string>
+    <string name="gamification_badge_focus">Focus finisher</string>
     <string name="planner_subtitle">Organise your week by adding focused study sessions.</string>
     <string name="planner_empty">You have not scheduled any tasks yet. Tap the + button to begin.</string>
     <string name="planner_add_task">Add study task</string>
@@ -55,6 +70,7 @@
     <string name="settings_account_name_placeholder">Learner</string>
     <string name="settings_notifications">Study reminders</string>
     <string name="settings_enable_notifications">Enable daily reminder notification</string>
+    <string name="settings_enable_wellness">Enable wellness nudges</string>
     <string name="settings_reminder_time_placeholder">Reminder set for 18:00</string>
     <string name="settings_change_time">Change time</string>
     <string name="settings_display_name_hint">Display name</string>
@@ -91,12 +107,26 @@
     <string name="login_highlight_analytics">Understand your progress with visual dashboards.</string>
     <string name="login_feature_title">Why learners love StudyMate</string>
     <string name="login_language_hint">Switch between English and isiZulu anytime in Settings.</string>
+    <string name="biometric_button">Use biometrics to unlock</string>
+    <string name="biometric_title">Confirm it’s really you</string>
+    <string name="biometric_subtitle">Secure sign-in with your fingerprint or face</string>
+    <string name="biometric_negative">Use Google instead</string>
     <string name="calendar_permission_granted">Calendar access granted</string>
     <string name="calendar_permission_denied">Calendar access denied</string>
     <string name="notification_channel_daily_name">Daily study reminders</string>
     <string name="notification_channel_daily_desc">Gentle nudges to keep your study streak alive.</string>
     <string name="notification_channel_deadline_name">Upcoming deadlines</string>
     <string name="notification_channel_deadline_desc">Alerts for urgent assignments and exam countdowns.</string>
+    <string name="notification_channel_wellness_name">Wellness nudges</string>
+    <string name="notification_channel_wellness_desc">Gentle reminders to hydrate, stretch, and take mindful breaks.</string>
+    <string name="wellness_nudge_title">Wellness break</string>
+    <string-array name="wellness_nudges">
+        <item>Time for a water break. Hydration fuels focus!</item>
+        <item>Stand up and stretch for a minute to reset your posture.</item>
+        <item>Close your eyes, take five deep breaths, then dive back in.</item>
+        <item>Quick walk-around suggestion: a few steps can boost energy.</item>
+        <item>Great work! Grab a healthy snack to keep your brain happy.</item>
+    </string-array>
     <string name="notification_daily_title">Today\'s focus</string>
     <string name="notification_daily_body">Next up: %1$s due in %2$d days. Let\'s get started!</string>
     <string name="notification_assignment_title">Assignment due soon</string>

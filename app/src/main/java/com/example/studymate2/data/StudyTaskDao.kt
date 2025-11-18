@@ -11,8 +11,14 @@ interface StudyTaskDao {
     @Query("SELECT * FROM study_tasks WHERE completed = 0")
     suspend fun getPendingTasks(): List<StudyTask>
 
+    @Query("SELECT * FROM study_tasks")
+    suspend fun getTasksOnce(): List<StudyTask>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: StudyTask)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTasks(tasks: List<StudyTask>)
 
     @Update
     suspend fun updateTask(task: StudyTask)

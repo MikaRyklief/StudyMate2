@@ -7,6 +7,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
@@ -21,7 +22,7 @@ class CalendarSyncWorker(
     override suspend fun doWork(): Result {
         val user = auth.currentUser ?: run {
             Log.w("CalendarSyncWorker", "No user signed in; skipping sync")
-            return Result.retry()
+            return Result.success()
         }
 
         val projection = arrayOf(
@@ -81,6 +82,10 @@ class CalendarSyncWorker(
             Log.d("CalendarSyncWorker", "Uploaded ${events.size} events to Firestore")
             return Result.success()
         } catch (e: Exception) {
+            if (e is FirebaseFirestoreException && e.code == FirebaseFirestoreException.Code.PERMISSION_DENIED) {
+                Log.e("CalendarSyncWorker", "Sync failed due to permissions; not retrying", e)
+                return Result.failure()
+            }
             Log.e("CalendarSyncWorker", "Sync failed", e)
             return Result.retry()
         }

@@ -19,7 +19,8 @@ data class UserSettings(
     val notificationsEnabled: Boolean = true,
     val reminderHour: Int = 18,
     val reminderMinute: Int = 0,
-    val languageCode: String = "en"
+    val languageCode: String = "en",
+    val wellnessNudgesEnabled: Boolean = true
 )
 
 class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
@@ -29,6 +30,7 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
         val REMINDER_HOUR = intPreferencesKey("reminder_hour")
         val REMINDER_MINUTE = intPreferencesKey("reminder_minute")
         val LANGUAGE_CODE = stringPreferencesKey("language_code")
+        val WELLNESS_ENABLED = booleanPreferencesKey("wellness_enabled")
     }
 
     val settingsFlow: Flow<UserSettings> = dataStore.data.map { prefs ->
@@ -36,7 +38,8 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
             notificationsEnabled = prefs[Keys.NOTIFICATIONS_ENABLED] ?: true,
             reminderHour = prefs[Keys.REMINDER_HOUR] ?: 18,
             reminderMinute = prefs[Keys.REMINDER_MINUTE] ?: 0,
-            languageCode = prefs[Keys.LANGUAGE_CODE] ?: "en"
+            languageCode = prefs[Keys.LANGUAGE_CODE] ?: "en",
+            wellnessNudgesEnabled = prefs[Keys.WELLNESS_ENABLED] ?: true
         )
     }
 
@@ -56,6 +59,12 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     suspend fun setLanguage(languageCode: String) {
         dataStore.edit { prefs ->
             prefs[Keys.LANGUAGE_CODE] = languageCode
+        }
+    }
+
+    suspend fun setWellnessEnabled(enabled: Boolean) {
+        dataStore.edit { prefs ->
+            prefs[Keys.WELLNESS_ENABLED] = enabled
         }
     }
 }

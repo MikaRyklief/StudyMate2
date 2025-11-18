@@ -10,4 +10,14 @@ class Converters {
     fun toTaskType(value: String?): TaskType = value?.let {
         runCatching { TaskType.valueOf(it) }.getOrDefault(TaskType.ASSIGNMENT)
     } ?: TaskType.ASSIGNMENT
+
+    @TypeConverter
+    fun fromBadgeList(badges: List<String>?): String = badges?.joinToString(separator = "|") ?: ""
+
+    @TypeConverter
+    fun toBadgeList(serialized: String?): List<String> = serialized
+        ?.takeIf { it.isNotBlank() }
+        ?.split("|")
+        ?.filter { it.isNotBlank() }
+        ?: emptyList()
 }

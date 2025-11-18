@@ -35,6 +35,12 @@ class SettingsViewModel(private val repository: UserPreferencesRepository) : Vie
             repository.setLanguage(languageCode)
         }
     }
+
+    fun setWellness(enabled: Boolean) {
+        viewModelScope.launch {
+            repository.setWellnessEnabled(enabled)
+        }
+    }
 }
 
 class SettingsViewModelFactory(private val repository: UserPreferencesRepository) : ViewModelProvider.Factory {

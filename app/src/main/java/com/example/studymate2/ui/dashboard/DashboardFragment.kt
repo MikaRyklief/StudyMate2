@@ -12,8 +12,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studymate2.R
 import com.example.studymate2.databinding.FragmentDashboardBinding
+import com.example.studymate2.data.GamificationProfile
 import com.example.studymate2.viewmodel.StudyTaskViewModel
 import com.example.studymate2.viewmodel.StudyTaskViewModelFactory
+import com.example.studymate2.viewmodel.GamificationViewModel
+import com.example.studymate2.viewmodel.GamificationViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -25,6 +28,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.google.android.material.chip.Chip
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
@@ -37,6 +41,9 @@ class DashboardFragment : Fragment() {
     private val dashboardAdapter = DashboardTaskAdapter()
     private val taskViewModel: StudyTaskViewModel by activityViewModels {
         StudyTaskViewModelFactory(requireActivity().application)
+    }
+    private val gamificationViewModel: GamificationViewModel by activityViewModels {
+        GamificationViewModelFactory(requireActivity().application)
     }
 
     private var timer: CountDownTimer? = null
@@ -81,6 +88,10 @@ class DashboardFragment : Fragment() {
             updateAnalytics(tasks)
         }
 
+        gamificationViewModel.profile.observe(viewLifecycleOwner) { profile ->
+            updateGamification(profile)
+        }
+
         binding.startTimerButton.setOnClickListener { toggleTimer() }
         binding.resetTimerButton.setOnClickListener { resetTimer() }
 
@@ -114,6 +125,7 @@ class DashboardFragment : Fragment() {
                 timeLeftMillis = DEFAULT_FOCUS_DURATION
                 isTimerRunning = false
                 updateTimerText()
+                gamificationViewModel.onFocusSessionFinished((DEFAULT_FOCUS_DURATION / 60000).toInt())
             }
         }.start()
         isTimerRunning = true
@@ -251,6 +263,57 @@ class DashboardFragment : Fragment() {
         } else {
             binding.analyticsInsight.text = getString(R.string.analytics_insight_placeholder)
         }
+    }
+
+    private fun updateGamification(profile: GamificationProfile) {
+        val level = (profile.xp / 100) + 1
+        val progress = profile.xp % 100
+
+        binding.xpLabel.text = getString(R.string.gamification_level_label, level, progress)
+        binding.xpProgress.progress = progress
+
+        binding.streakLabel.text = resources.getQuantityString(
+            R.plurals.gamification_streak,
+            profile.streakDays,
+            profile.streakDays
+        )
+
+        binding.badgesChipGroup.removeAllViews()
+        if (profile.badges.isEmpty()) {
+            val emptyChip = Chip(requireContext()).apply {
+                text = getString(R.string.gamification_badges_placeholder)
+                isCheckable = false
+                isClickable = false
+            }
+            binding.badgesChipGroup.addView(emptyChip)
+            return
+        }
+
+        profile.badges.sorted().forEach { badgeKey ->
+            val label = badgeLabelForKey(badgeKey)
+            val chip = Chip(requireContext()).apply {
+                text = label
+                isCheckable = false
+                isClickable = false
+                chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            }
+            binding.badgesChipGroup.addView(chip)
+        }
+    }
+
+    private fun badgeLabelForKey(key: String): String = when (key) {
+        com.example.studymate2.repository.GamificationRepository.BADGE_FIRST_STEP ->
+            getString(R.string.gamification_badge_first)
+        com.example.studymate2.repository.GamificationRepository.BADGE_STREAK_3 ->
+            getString(R.string.gamification_badge_streak3)
+        com.example.studymate2.repository.GamificationRepository.BADGE_STREAK_7 ->
+            getString(R.string.gamification_badge_streak7)
+        com.example.studymate2.repository.GamificationRepository.BADGE_CENTURY_XP ->
+            getString(R.string.gamification_badge_century)
+        com.example.studymate2.repository.GamificationRepository.BADGE_FOCUS_MASTER ->
+            getString(R.string.gamification_badge_focus)
+        else -> key
     }
 
     companion object {

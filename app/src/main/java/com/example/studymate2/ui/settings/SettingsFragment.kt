@@ -121,6 +121,13 @@ class SettingsFragment : Fragment() {
                         )
                     }
 
+                    binding.wellnessSwitch.setOnCheckedChangeListener(null)
+                    binding.wellnessSwitch.isChecked = settings.wellnessNudgesEnabled
+                    binding.wellnessSwitch.setOnCheckedChangeListener { _, enabled ->
+                        viewModel.setWellness(enabled)
+                        StudyNotificationScheduler.scheduleWellnessNudges(requireContext(), enabled)
+                    }
+
                     binding.reminderTime.text = getString(
                         R.string.settings_reminder_updated,
                         settings.reminderHour,
@@ -136,6 +143,10 @@ class SettingsFragment : Fragment() {
                         settings.reminderHour,
                         settings.reminderMinute,
                         settings.notificationsEnabled
+                    )
+                    StudyNotificationScheduler.scheduleWellnessNudges(
+                        requireContext(),
+                        settings.wellnessNudgesEnabled
                     )
                 }
             }

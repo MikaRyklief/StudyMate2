@@ -83,6 +83,9 @@ dependencies {
     // --- WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 
+    // --- Biometrics
+    implementation("androidx.biometric:biometric:1.1.0")
+
     // --- Material Components
     implementation("com.google.android.material:material:1.12.0")
 

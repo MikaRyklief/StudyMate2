@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.studymate2.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -14,12 +15,16 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.example.studymate2.util.BiometricAuthenticator
+import com.example.studymate2.util.BiometricResult
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private var biometricAuthenticator: BiometricAuthenticator? = null
+    private var biometricsEnabled = false
 
     // Use Activity Result API instead of deprecated startActivityForResult
     private val signInLauncher =
@@ -46,6 +51,14 @@ class LoginActivity : AppCompatActivity() {
         // Initialize Firebase
         auth = FirebaseAuth.getInstance()
 
+        biometricAuthenticator = BiometricAuthenticator(this) { result ->
+            when (result) {
+                BiometricResult.Success -> navigateToMain()
+                is BiometricResult.Error -> showError(result.message)
+            }
+        }
+        updateBiometricAvailability()
+
         // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -59,14 +72,39 @@ class LoginActivity : AppCompatActivity() {
             binding.signInProgress.visibility = View.VISIBLE
             signInLauncher.launch(googleSignInClient.signInIntent)
         }
+
+        binding.biometricButton.setOnClickListener {
+            promptBiometric()
+        }
     }
 
     override fun onStart() {
         super.onStart()
+        updateBiometricAvailability()
         // If user is already signed in, skip login
         auth.currentUser?.let {
-            navigateToMain()
+            if (biometricsEnabled) {
+                binding.biometricButton.isVisible = true
+                promptBiometric()
+            } else {
+                navigateToMain()
+            }
         }
+    }
+
+    private fun promptBiometric() {
+        if (biometricsEnabled) {
+            biometricAuthenticator?.authenticate(
+                getString(R.string.biometric_title),
+                getString(R.string.biometric_subtitle),
+                getString(R.string.biometric_negative)
+            )
+        }
+    }
+
+    private fun updateBiometricAvailability() {
+        biometricsEnabled = auth.currentUser != null && biometricAuthenticator?.canAuthenticate() == true
+        binding.biometricButton.isVisible = biometricsEnabled
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {

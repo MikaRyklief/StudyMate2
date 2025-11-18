@@ -161,6 +161,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginLanguageHint" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/biometricButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        android:text="@string/biometric_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signInButton" />
+
     <ProgressBar
         android:id="@+id/signInProgress"
         style="@style/Widget.Material3.CircularProgressIndicator.Small"
@@ -170,6 +182,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/signInButton" />
+        app:layout_constraintTop_toBottomOf="@id/biometricButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

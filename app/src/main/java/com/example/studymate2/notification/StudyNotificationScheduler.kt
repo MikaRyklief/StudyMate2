@@ -20,9 +20,11 @@ import java.util.concurrent.TimeUnit
 object StudyNotificationScheduler {
     const val DAILY_CHANNEL_ID = "study_daily_channel"
     const val DEADLINE_CHANNEL_ID = "study_deadline_channel"
+    const val WELLNESS_CHANNEL_ID = "study_wellness_channel"
 
     private const val DAILY_WORK_NAME = "daily_study_reminder"
     private const val IMMEDIATE_WORK_NAME = "upcoming_task_ping"
+    private const val WELLNESS_WORK_NAME = "wellness_nudges"
 
     fun createChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -41,8 +43,16 @@ object StudyNotificationScheduler {
             ).apply {
                 description = context.getString(com.example.studymate2.R.string.notification_channel_deadline_desc)
             }
+            val wellnessChannel = NotificationChannel(
+                WELLNESS_CHANNEL_ID,
+                context.getString(com.example.studymate2.R.string.notification_channel_wellness_name),
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = context.getString(com.example.studymate2.R.string.notification_channel_wellness_desc)
+            }
             manager.createNotificationChannel(dailyChannel)
             manager.createNotificationChannel(deadlineChannel)
+            manager.createNotificationChannel(wellnessChannel)
         }
     }
 
@@ -90,6 +100,28 @@ object StudyNotificationScheduler {
         workManager.enqueueUniqueWork(
             IMMEDIATE_WORK_NAME,
             ExistingWorkPolicy.REPLACE,
+            request
+        )
+    }
+
+    fun scheduleWellnessNudges(context: Context, enabled: Boolean) {
+        val workManager = WorkManager.getInstance(context)
+        if (!enabled || !hasNotificationPermission(context)) {
+            workManager.cancelUniqueWork(WELLNESS_WORK_NAME)
+            return
+        }
+
+        val constraints = androidx.work.Constraints.Builder()
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        val request = PeriodicWorkRequestBuilder<WellnessNudgeWorker>(3, TimeUnit.HOURS)
+            .setConstraints(constraints)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            WELLNESS_WORK_NAME,
+            ExistingPeriodicWorkPolicy.UPDATE,
             request
         )
     }
